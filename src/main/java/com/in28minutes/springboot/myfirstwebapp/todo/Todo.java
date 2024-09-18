@@ -54,8 +54,8 @@ public class Todo {
         return isComplete;
     }
 
-    public void setComplete(boolean complete) {
-        isComplete = complete;
+    public void setComplete(boolean isComplete) {
+        this.isComplete = isComplete;
     }
 
     @Override
