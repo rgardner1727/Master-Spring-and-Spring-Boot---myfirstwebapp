@@ -2,6 +2,7 @@ package com.in28minutes.springboot.myfirstwebapp.todo;
 
 
 import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -11,14 +12,15 @@ public class Todo {
 
     @Size(min=10, message = "Enter at least 10 characters")
     private String description;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate targetDate;
     private boolean isComplete;
 
-    public Todo(int id, String username, String description, LocalDate targetDate, boolean isComplete){
+    public Todo(int id, String username, String description, String targetDate, boolean isComplete){
         this.id = id;
         this.username = username;
         this.description = description;
-        this.targetDate = targetDate;
+        this.targetDate = LocalDate.parse(targetDate);
         this.isComplete = isComplete;
     }
 

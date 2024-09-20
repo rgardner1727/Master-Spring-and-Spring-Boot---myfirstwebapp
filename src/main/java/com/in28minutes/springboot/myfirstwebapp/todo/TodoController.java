@@ -29,7 +29,7 @@ public class TodoController {
 
     @RequestMapping(value="/add-todo", method=RequestMethod.GET)
     public String getAddTodo(ModelMap modelMap){
-        modelMap.put("todo", new Todo(4, "username set in get request handler", "", LocalDate.now().plusYears(1), false));
+        modelMap.put("todo", new Todo(4, "username set in get request handler", "", LocalDate.now().toString(), false));
         return "addTodo";
     }
 
@@ -38,7 +38,7 @@ public class TodoController {
         if(bindingResult.hasErrors()) {
             return "addTodo";
         }
-        todoService.addTodo((String)modelMap.get("name"), todo.getDescription(), LocalDate.now().plusYears(1), false);
+        todoService.addTodo((String)modelMap.get("name"), todo.getDescription(), todo.getTargetDate().toString(), false);
         logger.debug("Todo date = " + todo.getTargetDate());
         return "redirect:/list-todos";
     }
@@ -59,6 +59,8 @@ public class TodoController {
     public String updateTodo(ModelMap modelMap, @Valid Todo todo, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "addTodo";
+        todo.setUsername((String) modelMap.get("name"));
+        logger.debug("Todo username = " + todo.getUsername());
         todoService.updateTodo(todo);
         return "redirect:/list-todos";
     }
