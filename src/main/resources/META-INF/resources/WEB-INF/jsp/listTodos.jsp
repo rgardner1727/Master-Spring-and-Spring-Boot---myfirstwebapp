@@ -26,7 +26,8 @@
                                 <td>${todo.id}</td>
                                 <td>${todo.description}</td>
                                 <td>${todo.targetDate}</td>
-                                <td>${todo.isComplete()}</td>
+                                <td>${todo.getIsComplete()}</td>
+                                <td><a href="/delete-todo" class="btn btn-danger">Delete</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>
