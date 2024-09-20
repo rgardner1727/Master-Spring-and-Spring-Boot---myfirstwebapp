@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class TodoService {
@@ -15,9 +17,9 @@ public class TodoService {
     static{
         todoList.add(new Todo(1, "in28minutes", "Learn AWS",
                 LocalDate.now().plusYears(1), false));
-        todoList.add(new Todo(1, "in28minutes", "Learn DevOps",
+        todoList.add(new Todo(2, "in28minutes", "Learn DevOps",
                 LocalDate.now().plusYears(2), false));
-        todoList.add(new Todo(1, "in28minutes", "Learn Full Stack Development",
+        todoList.add(new Todo(3, "in28minutes", "Learn Full Stack Development",
                 LocalDate.now().plusYears(3), false));
     }
 
@@ -27,5 +29,18 @@ public class TodoService {
 
     public void addTodo(String name, String description, LocalDate targetDate, boolean isComplete){
         todoList.add(new Todo(++todoListCount, name, description, targetDate, isComplete));
+    }
+
+    public void deleteTodoById(int id){
+        todoList.removeIf(todo -> todo.getId() == id);
+    }
+
+    public Todo getTodoById(int id){
+        return todoList.stream().filter(todo -> todo.getId() == id).findFirst().get();
+    }
+
+    public void updateTodo(Todo formTodo){
+        Todo todoToUpdate = this.getTodoById(formTodo.getId());
+        todoToUpdate.setDescription(formTodo.getDescription());
     }
 }

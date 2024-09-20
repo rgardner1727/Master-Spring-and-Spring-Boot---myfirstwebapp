@@ -10,6 +10,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.time.LocalDate;
 
 @Controller
@@ -38,6 +40,26 @@ public class TodoController {
         }
         todoService.addTodo((String)modelMap.get("name"), todo.getDescription(), LocalDate.now().plusYears(1), false);
         logger.debug("Todo date = " + todo.getTargetDate());
+        return "redirect:/list-todos";
+    }
+
+    @RequestMapping(value="/delete-todo", method=RequestMethod.GET)
+    public String deleteTodo(@RequestParam int id){
+        todoService.deleteTodoById(id);
+        return "redirect:/list-todos";
+    }
+
+    @RequestMapping(value="/update-todo", method=RequestMethod.GET)
+    public String getUpdateTodo(@RequestParam int id, ModelMap modelMap){
+        modelMap.addAttribute("todo", todoService.getTodoById(id));
+        return "addTodo";
+    }
+
+    @RequestMapping(value="/update-todo", method=RequestMethod.POST)
+    public String updateTodo(ModelMap modelMap, @Valid Todo todo, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "addTodo";
+        todoService.updateTodo(todo);
         return "redirect:/list-todos";
     }
 }
