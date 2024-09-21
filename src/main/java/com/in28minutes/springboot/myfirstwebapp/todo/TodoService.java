@@ -17,18 +17,18 @@ public class TodoService {
 
     static{
         todoList.add(new Todo(1, "in28minutes", "Learn AWS Now!",
-                LocalDate.now().plusYears(1).toString(), false));
+                LocalDate.now().plusYears(1), false));
         todoList.add(new Todo(2, "in28minutes", "Learn DevOps",
-                LocalDate.now().plusYears(2).toString(), false));
+                LocalDate.now().plusYears(2), false));
         todoList.add(new Todo(3, "in28minutes", "Learn Full Stack Development",
-                LocalDate.now().plusYears(3).toString(), false));
+                LocalDate.now().plusYears(3), false));
     }
 
     public List<Todo> getTodoListByUsername(String username){
         return todoList;
     }
 
-    public void addTodo(String name, String description, String targetDate, boolean isComplete){
+    public void addTodo(String name, String description, LocalDate targetDate, boolean isComplete){
         todoList.add(new Todo(++todoListCount, name, description, targetDate, isComplete));
     }
 

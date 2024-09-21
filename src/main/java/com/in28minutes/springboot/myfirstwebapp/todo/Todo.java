@@ -12,15 +12,14 @@ public class Todo {
 
     @Size(min=10, message = "Enter at least 10 characters")
     private String description;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate targetDate;
     private boolean isComplete;
 
-    public Todo(int id, String username, String description, String targetDate, boolean isComplete){
+    public Todo(int id, String username, String description, LocalDate targetDate, boolean isComplete){
         this.id = id;
         this.username = username;
         this.description = description;
-        this.targetDate = LocalDate.parse(targetDate);
+        this.targetDate = targetDate;
         this.isComplete = isComplete;
     }
 

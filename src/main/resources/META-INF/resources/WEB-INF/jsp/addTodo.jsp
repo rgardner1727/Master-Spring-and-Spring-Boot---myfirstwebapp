@@ -20,7 +20,7 @@
 
                     <fieldset class="mb-3">
                         <form:label path="targetDate">Target Date:</form:label>
-                        <form:input type="text" path="targetDate" required="required"/>
+                        <form:input type="date" path="targetDate" required="required"/>
                         <form:errors path="targetDate" cssClass="text-warning"/>
                     </fieldset>
 
@@ -34,13 +34,6 @@
           </div>
           <script src="webjars\bootstrap\5.1.3\js\bootstrap.min.js"></script>
           <script src="webjars\jquery\3.6.0\jquery.min.js"></script>
-          <script src="webjars\bootstrap-datepicker\1.9.0\js\bootstrap-datepicker.min.js"></script>
 
-          <script>
-          $('#targetDate').datepicker({
-              format: 'yyyy-mm-dd',
-              startDate: '-3d'
-          });
-          </script>
     </body>
 </html>
