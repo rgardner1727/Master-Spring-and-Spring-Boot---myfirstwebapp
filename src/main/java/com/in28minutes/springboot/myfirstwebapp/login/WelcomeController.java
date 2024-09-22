@@ -1,5 +1,7 @@
 package com.in28minutes.springboot.myfirstwebapp.login;
 
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +14,11 @@ public class WelcomeController {
 
     @RequestMapping(value="/", method=RequestMethod.GET)
     public String getWelcomePage(ModelMap modelMap){
-        modelMap.put("name", "in28minutes");
+        modelMap.put("name", this.getLoggedInUserUsername());
         return "welcome";
+    }
+
+    private String getLoggedInUserUsername(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

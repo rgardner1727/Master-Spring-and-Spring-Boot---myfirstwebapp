@@ -17,7 +17,7 @@ public class SpringSecurityConfiguration {
                 .passwordEncoder(input -> passwordEncoder().encode(input))
                 .username("in28minutes")
                 .password("password")
-                .roles("USER", "ADMIM")
+                .roles("USER", "ADMIN")
                 .build());
     }
 
