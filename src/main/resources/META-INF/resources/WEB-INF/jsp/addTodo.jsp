@@ -7,6 +7,7 @@
         <title>Add Todo Page</title>
     </head>
     <body>
+        <%@ include file="common/nav.jspf" %>
           <div class="container">
             <h1>Enter Todo Details</h1>
             <hr>
@@ -32,8 +33,6 @@
                 </form:form>
             </main>
           </div>
-          <script src="webjars\bootstrap\5.1.3\js\bootstrap.min.js"></script>
-          <script src="webjars\jquery\3.6.0\jquery.min.js"></script>
-
+          <%@ include file="common/scripts.jspf" %>
     </body>
 </html>

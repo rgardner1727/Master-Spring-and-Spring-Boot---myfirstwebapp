@@ -1,11 +1,8 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <html>
-    <head>
-        <link href="webjars\bootstrap\5.1.3\css\bootstrap.min.css" rel="stylesheet">
-        <title>List Todos Page</title>
-    </head>
-
+    <%@ include file="common/header.jspf" %>
     <body>
+        <%@ include file="common/nav.jspf" %>
           <div class="container">
             <h1>Welcome to in28minutes!</h1>
             <hr>
@@ -35,8 +32,7 @@
                 </table>
                 <a href="/add-todo" class="btn btn-success">Add Todo</a>
             </main>
-            <script>src="webjars\bootstrap\5.1.3\js\bootstrap.min.js"</script>
-            <script>src="webjars\jquery\3.6.0\jquery.min.js"</script>
+            <%@ include file="common/scripts.jspf" %>
           </div>
     </body>
 </html>
