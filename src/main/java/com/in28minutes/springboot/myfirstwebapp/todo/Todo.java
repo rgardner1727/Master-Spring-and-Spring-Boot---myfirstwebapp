@@ -1,15 +1,20 @@
 package com.in28minutes.springboot.myfirstwebapp.todo;
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
+@Entity(name="Todo_Table")
 public class Todo {
+    @Id
+    @GeneratedValue
     private int id;
     private String username;
-
     @Size(min=10, message = "Enter at least 10 characters")
     private String description;
     private LocalDate targetDate;

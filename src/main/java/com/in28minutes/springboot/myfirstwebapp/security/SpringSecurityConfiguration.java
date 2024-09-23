@@ -2,11 +2,16 @@ package com.in28minutes.springboot.myfirstwebapp.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.function.Function;
 
@@ -30,5 +35,15 @@ public class SpringSecurityConfiguration {
                 .password(password)
                 .roles("USER", "ADMIN")
                 .build();
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
+        httpSecurity.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
+        httpSecurity.formLogin(Customizer.withDefaults());
+
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        httpSecurity.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
+        return httpSecurity.build();
     }
 }
