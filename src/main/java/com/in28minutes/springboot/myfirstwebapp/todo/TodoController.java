@@ -22,50 +22,44 @@ public class TodoController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private TodoService todoService;
+    private TodoRepository todoRepository;
 
     @RequestMapping(value="/list-todos", method=RequestMethod.GET)
-    public String listAllTodos(ModelMap modelMap){
-        modelMap.addAttribute("todos", todoService.getTodoListByUsername(this.getLoggedInUserUsername()));
+    public String listTodosByUsername(ModelMap modelMap){
+        modelMap.addAttribute("todos", todoRepository.findByUsername(this.getLoggedInUserUsername()));
         return "listTodos";
     }
 
     @RequestMapping(value="/add-todo", method=RequestMethod.GET)
     public String getAddTodo(ModelMap modelMap){
-        modelMap.put("todo", new Todo(4, "username set in get request handler", "", LocalDate.now(), false));
+        modelMap.addAttribute("todo", new Todo());
         return "addTodo";
     }
 
     @RequestMapping(value="/add-todo", method=RequestMethod.POST)
     public String addTodo(ModelMap modelMap, @Valid Todo todo, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) {
+        if(bindingResult.hasErrors())
             return "addTodo";
-        }
-        todoService.addTodo(this.getLoggedInUserUsername(), todo.getDescription(), todo.getTargetDate(), false);
-        logger.debug("Todo date = " + todo.getTargetDate());
+        todo.setUsername(this.getLoggedInUserUsername());
+        todoRepository.save(todo);
         return "redirect:/list-todos";
     }
 
     @RequestMapping(value="/delete-todo", method=RequestMethod.GET)
     public String deleteTodo(@RequestParam int id){
-        todoService.deleteTodoById(id);
-        return "redirect:/list-todos";
+        this.todoRepository.deleteById(id);
+        return "redirect:list-todos";
     }
 
     @RequestMapping(value="/update-todo", method=RequestMethod.GET)
     public String getUpdateTodo(@RequestParam int id, ModelMap modelMap){
-        modelMap.addAttribute("todo", todoService.getTodoById(id));
+        modelMap.addAttribute("todo", this.todoRepository.findById(id).get());
         return "addTodo";
     }
 
     @RequestMapping(value="/update-todo", method=RequestMethod.POST)
-    public String updateTodo(ModelMap modelMap, @Valid Todo todo, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            return "addTodo";
-        todo.setUsername(this.getLoggedInUserUsername());
-        logger.debug("Todo username = " + todo.getUsername());
-        todoService.updateTodo(todo);
-        return "redirect:/list-todos";
+    public String updateTodo(ModelMap modelMap, @Valid Todo todo, BindingResult bindingResult){
+        return this.addTodo(modelMap, todo, bindingResult);
     }
 
     private String getLoggedInUserUsername(){
