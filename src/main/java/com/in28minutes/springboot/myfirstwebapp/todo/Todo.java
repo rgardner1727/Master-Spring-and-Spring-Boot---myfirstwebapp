@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-@Entity(name="Todo_Table")
+@Entity(name="Todos_Table")
 public class Todo {
     @Id
     @GeneratedValue
